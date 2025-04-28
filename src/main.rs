@@ -90,7 +90,7 @@ fn main() {
         }
         let enable_spotlight =
             rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) || rl.is_key_down(KeyboardKey::KEY_RIGHT_CONTROL);
-        let scrolled_amount = rl.get_mouse_wheel_move_v().y;
+        let scrolled_amount = -rl.get_mouse_wheel_move_v().y;
         if rl.is_key_pressed(KeyboardKey::KEY_LEFT_CONTROL)
             || rl.is_key_pressed(KeyboardKey::KEY_RIGHT_CONTROL)
         {
