@@ -1,5 +1,6 @@
 use libwayshot::WayshotConnection;
-use raylib::{ffi::Image as FfiImage, prelude::*};
+use raylib::ffi::Image as FfiImage;
+use raylib::prelude::*;
 const SPOTLIGHT_TINT: Color = Color::new(0x00, 0x00, 0x00, 190);
 
 fn main() {
@@ -83,8 +84,7 @@ fn main() {
                 .load_shader(&thread, None, Some("shaders/spotlight.fs"))
                 .expect("Failed to load spotlight shader");
             spotlight_tint_uniform_location = spotlight_shader.get_shader_location("spotlightTint");
-            cursor_position_uniform_location =
-                spotlight_shader.get_shader_location("cursorPosition");
+            cursor_position_uniform_location = spotlight_shader.get_shader_location("cursorPosition");
             spotlight_radius_multiplier_uniform_location =
                 spotlight_shader.get_shader_location("spotlightRadiusMultiplier");
         }
@@ -104,18 +104,18 @@ fn main() {
             ) {
                 (_, false) => {
                     delta_scale += scrolled_amount as f64;
-                }
+                },
                 (true, true) => {
                     spotlight_radius_multiplier_delta -= scrolled_amount as f64;
-                }
-                _ => {}
+                },
+                _ => {},
             }
             scale_pivot = rl.get_mouse_position();
         }
         if delta_scale.abs() > 0.5 {
             let p0 = scale_pivot / rl_camera.zoom;
-            rl_camera.zoom = (rl_camera.zoom as f64 + delta_scale * rl.get_frame_time() as f64)
-                .clamp(1.0, 10.) as f32;
+            rl_camera.zoom =
+                (rl_camera.zoom as f64 + delta_scale * rl.get_frame_time() as f64).clamp(1.0, 10.) as f32;
             let p1 = scale_pivot / rl_camera.zoom;
             rl_camera.target += p0 - p1;
             delta_scale -= delta_scale * rl.get_frame_time() as f64 * 4.0
@@ -127,8 +127,7 @@ fn main() {
             spotlight_radius_multiplier_delta * rl.get_frame_time() as f64 * 4.0;
         const VELOCITY_THRESHOLD: f32 = 15.0;
         if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT) {
-            let delta = rl
-                .get_screen_to_world2D(rl.get_mouse_position() - rl.get_mouse_delta(), rl_camera)
+            let delta = rl.get_screen_to_world2D(rl.get_mouse_position() - rl.get_mouse_delta(), rl_camera)
                 - rl.get_screen_to_world2D(rl.get_mouse_position(), rl_camera);
             rl_camera.target += delta;
             velocity = delta * rl.get_fps().as_f32();
@@ -142,10 +141,8 @@ fn main() {
         if enable_spotlight {
             mode2d.clear_background(SPOTLIGHT_TINT);
             let mouse_position = mode2d.get_mouse_position();
-            spotlight_shader.set_shader_value(
-                spotlight_tint_uniform_location,
-                SPOTLIGHT_TINT.color_normalize(),
-            );
+            spotlight_shader
+                .set_shader_value(spotlight_tint_uniform_location, SPOTLIGHT_TINT.color_normalize());
             let screen_height = mode2d.get_screen_height().as_f32();
             spotlight_shader.set_shader_value(
                 cursor_position_uniform_location,
