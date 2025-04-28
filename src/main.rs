@@ -103,7 +103,7 @@ fn main() {
                 rl.is_key_down(KeyboardKey::KEY_LEFT_SHIFT) || rl.is_key_down(KeyboardKey::KEY_RIGHT_SHIFT),
             ) {
                 (_, false) => {
-                    delta_scale += scrolled_amount as f64;
+                    delta_scale += scrolled_amount as f64 * rl_camera.zoom as f64;
                 },
                 (true, true) => {
                     spotlight_radius_multiplier_delta -= scrolled_amount as f64;
