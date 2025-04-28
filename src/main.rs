@@ -115,7 +115,7 @@ fn main() {
         if delta_scale.abs() > 0.5 {
             let p0 = scale_pivot / rl_camera.zoom;
             rl_camera.zoom =
-                (rl_camera.zoom as f64 + delta_scale * rl.get_frame_time() as f64).clamp(1.0, 10.) as f32;
+                (rl_camera.zoom as f64 + delta_scale * rl.get_frame_time() as f64).clamp(1.0, 20.) as f32;
             let p1 = scale_pivot / rl_camera.zoom;
             rl_camera.target += p0 - p1;
             delta_scale -= delta_scale * rl.get_frame_time() as f64 * 4.0
